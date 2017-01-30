@@ -49,7 +49,7 @@
                 @if (!Auth::guest())
                     @if(Auth::user()->getTypeUser() == 1)
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ url('/home') }}">Tipo de usuario 1</a></li>
+                            <li><a href="{{ route('cuentas.index') }}">Tipo de usuario 1</a></li>
                         </ul>
                     @endif
                 @endif
@@ -81,14 +81,18 @@
         </div>
     </nav>
 
-    @yield('content')
-
+    <div class="container" id="main">
+        @yield('content')
+    </div>
     <!-- JavaScripts -->
     <!-- JQuery 2.2.3 -->
     <script src="{{ url('assets/js/jquery.js') }}" ></script>
+    <script src="{{ url('assets/js/vue.js') }}" ></script>
 
     <!-- Bootstrap 3.3.6 -->
     <script src="{{ url('assets/js/bootstrap.min.js') }}" ></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+
+    @yield('scripts')
 </body>
 </html>

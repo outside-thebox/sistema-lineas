@@ -17,4 +17,14 @@ Route::get('/', function () {
 
 Route::auth();
 
+Route::get('cuentas',[
+	'uses' => 'CuentasController@index',
+	'as' => 'cuentas.index'
+	]);
+
+Route::get('cuentas-create',[
+		'uses' => 'CuentasController@create',
+		'as' => 'cuentas.create'
+	]);
+
 Route::get('/home', 'HomeController@index');

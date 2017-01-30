@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+
+class CuentasController extends Controller
+{
+    public function __construct()
+    {
+    }
+
+    public function index()
+    {
+		return view('cuentas.index');
+    }
+
+    public function create()
+    {
+    	return view('cuentas.formulario');
+    }
+}
