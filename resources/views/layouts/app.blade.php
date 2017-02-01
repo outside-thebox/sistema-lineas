@@ -49,7 +49,7 @@
                 @if (!Auth::guest())
                     @if(Auth::user()->getTypeUser() == 1)
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ route('cuentas.index') }}">Tipo de usuario 1</a></li>
+                            <li><a href="{{ route('cuentas.index') }}">Cuentas</a></li>
                         </ul>
                     @endif
                 @endif

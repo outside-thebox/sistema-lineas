@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 	
-	<h1>@{{ name }}</h1>
+	<h1>@{{ titulo }}</h1>
 
 	{!! Form::model(isset($cuenta) ? $cuenta:null ,[], ['role' => 'form']) !!}
 		
@@ -27,8 +27,8 @@
 		</div>
 
 		<div class="col-md-12">
-	        <a href="{!! route('cuentas.index') !!}" class="btn btn-success pull-right" style="margin-right: 10px">Cancelar</a>
 			{!! Form::button("Guardar", ['type' => 'submit', 'class' => 'btn btn-primary pull-right']) !!}
+	        <a href="{!! route('cuentas.index') !!}" class="btn btn-success pull-right" style="margin-right: 10px">Cancelar</a>
 		</div>
 	{!! Form::close() !!}
 @endsection
@@ -37,7 +37,12 @@
 		new Vue({
 			el: '#main',
 			data:{
-				name: 'Agregar una cuenta'			
+				titulo: 'Agregar una cuenta',
+				nro_cuenta: '',
+				nombre_cuenta: '',
+				dominio: '',
+				server_principal: '',
+				server_backup: ''			
 			}
 		});
 	</script>
