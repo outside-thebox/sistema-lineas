@@ -17,10 +17,12 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('cuentas',[
+/*Route::get('cuentas',[
 	'uses' => 'CuentasController@index',
 	'as' => 'cuentas.index'
-	]);
+	]);*/
+
+Route::resource('cuentas','CuentasController');
 
 Route::get('cuentas-create',[
 		'uses' => 'CuentasController@create',
@@ -28,3 +30,8 @@ Route::get('cuentas-create',[
 	]);
 
 Route::get('/home', 'HomeController@index');
+
+/*
+Route::resource('cuentas','Api\Mysql\CuentasController');
+Route::resource('tipos_usuarios','Api\Mysql\TiposUsuariosController'); 
+*/
