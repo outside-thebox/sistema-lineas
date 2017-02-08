@@ -18,7 +18,7 @@ class Controller extends BaseController
         if(!$manager->isValid())
         {
             return Response()->json([
-                'errores' => $manager->getErrors(),
+                'errores' => $manager->mostrarErrores(false),
                 'success' => false
             ],404);
         }
@@ -34,7 +34,7 @@ class Controller extends BaseController
             else
             {
                 return Response()->json([
-                    'errores' => $manager->getErrors(),
+                    'errores' => $manager->mostrarErrores(false),
                     'success' => false
                 ],404);
 

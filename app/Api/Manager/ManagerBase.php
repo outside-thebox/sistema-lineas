@@ -42,11 +42,13 @@ abstract class ManagerBase {
         $mensaje = "";
         if(!$isValid)
         {
+            $array = [];
             foreach ($this->getErrors()->all() as $error)
             {
-                $mensaje .= $error."<br>";
+//                dd($error);
+                array_push($array,$error);
             }
-            return $mensaje;
+            return $array;
         }
     }
 

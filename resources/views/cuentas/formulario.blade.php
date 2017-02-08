@@ -7,6 +7,12 @@
 
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" v-model="token">
 
+        <div class="alert-danger" @v-show='errors'>
+            <li v-for="error in errors">
+                <ul>@{{ error.descripcion }}</ul>
+            </li>
+        </div>
+
 		<div class="col-md-6">
 			{{ Form::label('nro_cuenta','Nro de cuenta') }}
 			{{ Form::text('nro_cuenta',null,['v-model' => 'cuenta.nro_cuenta','placeholder' => 'Introduce el nro de cuenta', 'class' => 'form-control']) }}
@@ -55,8 +61,8 @@
 			},
 			methods:{
 				createCuenta: function(){
-					this.errors = [];
 					var cuenta = JSON.stringify(this.cuenta);
+                    vm.errors = [];
 					$.ajax({
 						url: "{{ Route('cuentas.store') }}",
 						method: 'POST',
@@ -65,9 +71,11 @@
 						success: function (data) {
 							console.log("hola");
 						},
-						error: function (jqXHR) {
-							//vm.errors = jqXHR.responseJSON.errors;
-							console.log(jqXHR);
+						error: function (respuesta) {
+                            var mensaje = "";
+                            $.each(respuesta.responseJSON.errores,function(code,obj){
+                                vm.errors.push({ 'descripcion':  obj });
+                            });
 						}
 					});
 				}
