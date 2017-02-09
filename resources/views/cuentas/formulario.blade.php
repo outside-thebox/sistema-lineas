@@ -9,7 +9,8 @@
 
         <div class="alert-danger" @v-show='errors'>
             <li v-for="error in errors">
-                <ul>@{{ error.descripcion }}</ul>
+                @{{ error.descripcion }}
+				<br>
             </li>
         </div>
 
@@ -35,7 +36,7 @@
 		</div>
 
 		<div class="col-md-12">
-			{!! Form::button("Guardar", ['type' => 'submit', 'class' => 'btn btn-primary pull-right', '@click.prevent'=>"createCuenta()"]) !!}
+			{!! Form::button("Guardar", ['type' => 'submit', 'class' => 'btn btn-primary pull-right','v-bind:disabled' => 'saving == true', '@click.prevent'=>"createCuenta()"]) !!}
 	        <a href="{!! route('cuentas.index') !!}" class="btn btn-success pull-right" style="margin-right: 10px">Cancelar</a>
 		</div>
 
@@ -44,6 +45,7 @@
 @endsection
 @section('scripts')
 	<script>
+
 		vm = new Vue({
 			el: '#main',
 			data:{
@@ -55,6 +57,7 @@
 					nombre_server_principal: '',
 					nombre_server_backup: ''
 				},
+				saving: false,
 				errors: [],
 				token: ''
 
@@ -62,6 +65,7 @@
 			methods:{
 				createCuenta: function(){
 					var cuenta = JSON.stringify(this.cuenta);
+					this.saving = true;
                     vm.errors = [];
 					$.ajax({
 						url: "{{ Route('cuentas.store') }}",
@@ -69,10 +73,11 @@
 						data: "cuenta="+cuenta+"&_token="+this.token,
 						dataType: 'json',
 						success: function (data) {
-							console.log("hola");
+							location.href = "{{ Route('cuentas.index') }}";
 						},
 						error: function (respuesta) {
                             var mensaje = "";
+							vm.saving = false;
                             $.each(respuesta.responseJSON.errores,function(code,obj){
                                 vm.errors.push({ 'descripcion':  obj });
                             });

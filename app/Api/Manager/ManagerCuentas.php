@@ -15,7 +15,7 @@ class ManagerCuentas extends ManagerBase
         return [
             'nro_cuenta' => 'required',
             'nombre_cuenta' => 'required',
-            'dominio' => 'required',
+            'dominio' => 'required | url',
             'nombre_server_principal' => 'required',
             'nombre_server_backup' => 'required'
         ];

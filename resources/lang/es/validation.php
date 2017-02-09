@@ -67,7 +67,7 @@ return array(
 		"array"   => "The :attribute must contain :size items.",
 	),
 	"unique"           => "The :attribute has already been taken.",
-	"url"              => "The :attribute format is invalid.",
+	"url"              => "El formato de :attribute es inválido.",
 
 	/*
 	|--------------------------------------------------------------------------
