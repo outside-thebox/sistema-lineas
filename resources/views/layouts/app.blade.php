@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/HoldOn.css') }}">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -84,10 +85,103 @@
     <div class="container" id="main">
         @yield('content')
     </div>
+    @include("components.modal")
     <!-- JavaScripts -->
     <!-- JQuery 2.2.3 -->
     <script src="{{ url('assets/js/jquery.js') }}" ></script>
     <script src="{{ url('assets/js/vue.js') }}" ></script>
+    <script src="{{ url('assets/js/HoldOn.js') }}" ></script>
+
+    <script>
+
+        /*
+        Possible types: "sk-cube-grid", "sk-bounce", "sk-folding-cube","sk-circle","sk-dot","sk-falding-circle"
+                        "sk-cube-grid", "custom"
+        */
+
+        function cargando(type,message){
+            HoldOn.open({
+                theme: type,
+                message:"<h4>"+message+"</h4>"
+            });
+
+            setTimeout(function(){
+                HoldOn.close();
+            },300000);
+        }
+
+        function traerResultados(url)
+        {
+            cargando('Buscando resultados');
+            $.ajax({
+                type: "GET",
+                url: url,
+                assync: false,
+                success: function(data){
+                    mostrarDatos(data);
+                    HoldOn.close();
+                }
+            });
+        }
+
+
+
+        function peticionAjax(destino,datos,redireccionar)
+        {
+            redireccionar = redireccionar || 0;
+            cargando('Guardando...');
+            $.ajax({
+                type: "Post",
+                url: destino,
+                data: datos,
+                assync: true,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta){
+
+                    //                console.log(respuesta);
+                    if(isNaN(respuesta) ) {
+                        if(respuesta.substr(0,4) == "http")
+                        {
+                            window.location.href = respuesta;
+                            respuesta = "Datos guardados correctamente";
+//                        HoldOn.close();
+                        }
+
+                        $("#contenido-modal").html(respuesta);
+                        $("#confirmacion").modal(function(){show:true});
+//                    HoldOn.close();
+                    }
+                    else
+                    {
+                        //                    $("#id_persona").val(respuesta);
+                        $("#contenido-modal").html("Datos guardados correctamente");
+                        $("#confirmacion").modal(function(){show:true});
+//                    HoldOn.close();
+                    }
+                    HoldOn.close();
+                },
+                error: function(result) {
+                    $("#contenido-modal").html("Hubo un error, consulta con el administrador");
+                    $("#confirmacion").modal(function(){show:true});
+                    HoldOn.close();
+                }
+
+
+            });
+        }
+
+        function darMensaje(mensaje)
+        {
+            $("#contenido-modal").html(mensaje);
+            $("#confirmacion").modal(function(){show:true});
+        }
+
+
+    </script>
+
 
     <!-- Bootstrap 3.3.6 -->
     <script src="{{ url('assets/js/bootstrap.min.js') }}" ></script>

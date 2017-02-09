@@ -65,6 +65,7 @@
 			methods:{
 				createCuenta: function(){
 					var cuenta = JSON.stringify(this.cuenta);
+					cargando('sk-folding-cube','Guardando');
 					this.saving = true;
                     vm.errors = [];
 					$.ajax({
@@ -81,8 +82,10 @@
                             $.each(respuesta.responseJSON.errores,function(code,obj){
                                 vm.errors.push({ 'descripcion':  obj });
                             });
+                            HoldOn.close();
 						}
 					});
+
 				}
 			}
 		});
