@@ -20,8 +20,10 @@ abstract class RepoBase
         $this->model = $model;
     }
 
-    protected function getModel()
+    abstract public function getModel();
+
+    public function find($id)
     {
-        return new $this->model;
+        return $this->getModel()->find($id);
     }
 }

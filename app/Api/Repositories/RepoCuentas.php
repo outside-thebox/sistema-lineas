@@ -10,9 +10,20 @@
 namespace App\Api\Repositories;
 
 
+use App\Api\Entities\Mysql\Cuentas;
+
 class RepoCuentas extends RepoBase
 {
+    var $data = [];
+    public function __construct($data = [])
+    {
+        $this->data = $data;
+    }
 
+    public function getModel()
+    {
+        return new Cuentas();
+    }
 
 
 }

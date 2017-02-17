@@ -20,6 +20,7 @@ class CreateTableCuentas extends Migration
             $table->string('nombre_server_principal',100);
             $table->string('nombre_server_backup',100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

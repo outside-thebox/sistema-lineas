@@ -31,7 +31,14 @@ Route::get('cuentas-create',[
 
 Route::get('/home', 'HomeController@index');
 
+
+Route::group(['prefix' => 'api'], function () {
+    Route::group(['prefix' => 'v1'], function () {
+        Route::resource('cuentas','Api\Mysql\CuentasController');
+
+    });
+});
+
 /*
-Route::resource('cuentas','Api\Mysql\CuentasController');
-Route::resource('tipos_usuarios','Api\Mysql\TiposUsuariosController'); 
+Route::resource('tipos_usuarios','Api\Mysql\TiposUsuariosController');
 */

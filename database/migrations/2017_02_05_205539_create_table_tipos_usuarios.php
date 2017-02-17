@@ -16,6 +16,7 @@ class CreateTableTiposUsuarios extends Migration
             $table->increments('id');
             $table->string('descripcion');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

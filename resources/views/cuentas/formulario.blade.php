@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 	
-	<h1>@{{ titulo }}</h1>
+	<h1>@{{ titulo }} una cuenta</h1>
 
 	{!! Form::model(isset($cuenta) ? $cuenta:null ,[''], ['role' => 'form']) !!}
 
@@ -14,25 +14,27 @@
             </li>
         </div>
 
+        {{ Form::hidden('id',null,['v-model' => 'cuenta.id']) }}
+
 		<div class="col-md-6">
 			{{ Form::label('nro_cuenta','Nro de cuenta') }}
-			{{ Form::text('nro_cuenta',null,['v-model' => 'cuenta.nro_cuenta','placeholder' => 'Introduce el nro de cuenta', 'class' => 'form-control']) }}
+			{{ Form::text('nro_cuenta',null,['v-model' => 'cuenta.nro_cuenta','placeholder' => 'Introduce el nro de cuenta', 'class' => 'form-control','@keyup'=>"permitirGuardar()"]) }}
 		</div>
 		<div class="col-md-6">
 			{{ Form::label('nombre_cuenta','Nombre de la cuenta') }}
-			{{ Form::text('nombre_cuenta',null,['v-model' => 'cuenta.nombre_cuenta','placeholder' => 'Introduce el nombre de la cuenta', 'class' => 'form-control']) }}
+			{{ Form::text('nombre_cuenta',null,['v-model' => 'cuenta.nombre_cuenta','placeholder' => 'Introduce el nombre de la cuenta', 'class' => 'form-control','@keyup'=>"permitirGuardar()"]) }}
 		</div>
 		<div class="col-md-6">
 			{{ Form::label('dominio','Dominio') }}
-			{{ Form::text('dominio',null,['v-model' => 'cuenta.dominio','placeholder' => 'Introduce el dominio', 'class' => 'form-control']) }}
+			{{ Form::text('dominio',null,['v-model' => 'cuenta.dominio','placeholder' => 'Introduce el dominio', 'class' => 'form-control','@keyup'=>"permitirGuardar()"]) }}
 		</div>
 		<div class="col-md-6">
 			{{ Form::label('nombre_server_principal','Nombre del server principal') }}
-			{{ Form::text('nombre_server_principal',null,['v-model' => 'cuenta.nombre_server_principal','placeholder' => 'Introduce nombre del server principal', 'class' => 'form-control']) }}
+			{{ Form::text('nombre_server_principal',null,['v-model' => 'cuenta.nombre_server_principal','placeholder' => 'Introduce nombre del server principal', 'class' => 'form-control','@keyup'=>"permitirGuardar()"]) }}
 		</div>
 		<div class="col-md-6">
 			{{ Form::label('nombre_server_backup','Nombre del server backup') }}
-			{{ Form::text('nombre_server_backup',null,['v-model' => 'cuenta.nombre_server_backup','placeholder' => 'Introduce nombre del server backup', 'class' => 'form-control']) }}
+			{{ Form::text('nombre_server_backup',null,['v-model' => 'cuenta.nombre_server_backup','placeholder' => 'Introduce nombre del server backup', 'class' => 'form-control','@keyup'=>"permitirGuardar()"]) }}
 		</div>
 
 		<div class="col-md-12">
@@ -50,13 +52,14 @@
 			el: '#main',
 			data:{
 				cuenta : {
-					titulo: 'Agregar una cuenta',
+					id: '',
 					nro_cuenta: '',
 					nombre_cuenta: '',
 					dominio: '',
 					nombre_server_principal: '',
 					nombre_server_backup: ''
 				},
+                titulo: "{{ $titulo }}",
 				saving: false,
 				errors: [],
 				token: ''
@@ -86,8 +89,31 @@
 						}
 					});
 
-				}
+				},
+                permitirGuardar: function()
+                {
+                    var puede_guardar = true;
+                    console.log(vm.cuenta.nro_cuenta);
+                    if(vm.cuenta.nro_cuenta == "")
+                        puede_guardar = false;
+                    if(vm.cuenta.nombre_cuenta == "")
+                        puede_guardar = false;
+                    if(vm.cuenta.dominio == "")
+                        puede_guardar = false;
+                    if(vm.cuenta.nombre_server_principal == "")
+                        puede_guardar = false;
+                    if(vm.cuenta.nombre_server_backup == "")
+                        puede_guardar = false;
+
+                    if(puede_guardar)
+                        vm.saving = false;
+                    else
+                        vm.saving = true;
+                }
+
 			}
 		});
+
+        vm.permitirGuardar();
 	</script>
 @endsection

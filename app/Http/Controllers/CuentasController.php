@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Api\Entities\Mysql\Cuentas;
 use App\Api\Manager\ManagerCuentas;
+use App\Api\Repositories\RepoCuentas;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -12,8 +13,11 @@ use Illuminate\Support\Facades\Input;
 
 class CuentasController extends Controller
 {
-    public function __construct()
+    private $repoCuentas;
+
+    public function __construct(RepoCuentas $repoCuentas)
     {
+        $this->repoCuentas = $repoCuentas;
     }
 
     public function index()
@@ -23,7 +27,15 @@ class CuentasController extends Controller
 
     public function create()
     {
-    	return view('cuentas.formulario');
+        $titulo = "Agregar";
+    	return view('cuentas.formulario',compact('titulo'));
+    }
+
+    public function edit($id)
+    {
+        $cuenta = $this->repoCuentas->find($id);
+        $titulo = "Editar";
+        return view('cuentas.formulario',compact('cuenta','titulo'));
     }
 
     public function store()
@@ -35,7 +47,7 @@ class CuentasController extends Controller
 
     private function obtenerManager($data)
     {
-        $manager = new ManagerCuentas(new Cuentas,$data);
+        $manager = new ManagerCuentas($this->repoCuentas->getModel()->firstOrNew(['id' => $data['id']]),$data);
         return $manager;
     }
 

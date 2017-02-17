@@ -13,7 +13,7 @@ class ManagerCuentas extends ManagerBase
     public function getRules()
     {
         return [
-            'nro_cuenta' => 'required',
+            'nro_cuenta' => 'required | unique:cuentas',
             'nombre_cuenta' => 'required',
             'dominio' => 'required | url',
             'nombre_server_principal' => 'required',
